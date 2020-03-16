@@ -1,0 +1,124 @@
+<div class="card">
+  <div class="card-header">
+    Template Driven Form
+  </div>
+
+  <div class="card-body">
+    <form novalidate>
+
+      <div class="form-group row mb-2">
+        <label class="col-md-2 col-form-label"
+               for="productNameId">Product Name</label>
+        <div class="col-md-8">
+          <input class="form-control"
+                 id="productNameId"
+                 type="text"
+                 placeholder="Name (required)"
+                 formControlName="productName"
+                 [ngClass]="{'is-invalid': false }" />
+          <span class="invalid-feedback">
+            error
+          </span>
+        </div>
+      </div>
+
+      <div class="form-group row mb-2">
+        <label class="col-md-2 col-form-label"
+               for="productCodeId">Product Code</label>
+        <div class="col-md-8">
+          <input class="form-control"
+                 id="productCodeId"
+                 type="text"
+                 placeholder="Code (required)"
+                 formControlName="productCode"
+                 [ngClass]="{'is-invalid': false}" />
+          <span class="invalid-feedback">
+            error
+          </span>
+        </div>
+      </div>
+
+      <div class="form-group row mb-2">
+        <label class="col-md-2 col-form-label"
+               for="starRatingId">Star Rating (1-5)</label>
+
+        <div class="col-md-8">
+          <input class="form-control"
+                 id="starRatingId"
+                 type="text"
+                 placeholder="Rating (1-5)"
+                 formControlName="starRating"
+                 [ngClass]="{'is-invalid': false}" />
+          <span class="invalid-feedback">
+            error
+          </span>
+        </div>
+      </div>
+
+      <div formArrayName="tags">
+        <div class="form-group row mb-2">
+          <label class="col-md-2 col-form-label"
+                 [attr.for]="0">Tag</label>
+
+          <div class="col-md-8">
+            <input class="form-control"
+                   [id]="0"
+                   type="text"
+                   placeholder="Tag"/>
+          </div>
+          <button class="col-md-1 btn btn-outline-warning btn-sm"
+                  type="button"
+                  title="Delete this search tag">Delete Tag
+          </button>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-2 mb-2">
+          <button class="btn btn-outline-secondary btn-sm"
+                  type="button"
+                  title="Add a search tag">Add Tag
+          </button>
+        </div>
+      </div>
+
+      <div class="form-group row mb-2">
+        <label class="col-md-2 col-form-label"
+               for="descriptionId">Description</label>
+
+        <div class="col-md-8">
+          <textarea class="form-control"
+                    id="descriptionId"
+                    placeholder="Description"
+                    rows=3
+                    formControlName="description"
+                    [ngClass]="{'is-invalid': false}"></textarea>
+          <span class="invalid-feedback">
+            error
+          </span>
+        </div>
+      </div>
+
+      <div class="form-group row mb-2">
+        <div class="offset-md-2 col-md-4">
+          <button class="btn btn-primary mr-3"
+                  style="width:80px;"
+                  type="submit"
+                  [title]="false ? 'Save your entered data' : 'Disabled until the form data is valid'"
+                  [disabled]="true">
+            Save
+          </button>
+          <button class="btn btn-outline-secondary mr-3"
+                  style="width:80px;"
+                  type="button"
+                  title="Cancel your edits" routerLink="/">
+            Cancel
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="alert alert-danger">error
+  </div>
+</div>
