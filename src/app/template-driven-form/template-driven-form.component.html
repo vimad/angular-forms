@@ -4,7 +4,7 @@
   </div>
 
   <div class="card-body">
-    <form novalidate>
+    <form novalidate #empForm="ngForm" (ngSubmit)="submit(empForm)">
 
       <div class="form-group row mb-2">
         <label class="col-md-2 col-form-label"
@@ -14,40 +14,61 @@
                  id="nameId"
                  type="text"
                  placeholder="Name (required)"
-                 [ngClass]="{'is-invalid': false }" />
-          <span class="invalid-feedback">
-            error
+                 name="name"
+                 [(ngModel)]="employee.name"
+                 #empName = "ngModel"
+                 required
+                 minlength="3"
+                 [ngClass]="{'is-invalid': !empName.valid && (empName.touched || empName.dirty)}" />
+          <span class="invalid-feedback" *ngIf="empName.errors?.required">
+            Name is required
+          </span>
+          <span class="invalid-feedback" *ngIf="empName.errors?.minlength">
+            Name must be greater than 2 characters
           </span>
         </div>
       </div>
 
-      <div class="form-group row mb-2">
-        <label class="col-md-2 col-form-label"
-               for="emailId">Email</label>
-        <div class="col-md-8">
-          <input class="form-control"
-                 id="emailId"
-                 type="text"
-                 placeholder="Email (required)"
-                 [ngClass]="{'is-invalid': false}" />
-          <span class="invalid-feedback">
-            error
-          </span>
+      <div ngModelGroup="emailGroup" appConfirmEmail #emailGroup = "ngModelGroup">
+        <div class="form-group row mb-2">
+          <label class="col-md-2 col-form-label"
+                 for="emailId">Email</label>
+          <div class="col-md-8">
+            <input class="form-control"
+                   id="emailId"
+                   type="text"
+                   placeholder="Email (required)"
+                   required
+                   name="email"
+                   #email = "ngModel"
+                   [(ngModel)]="employee.email"
+                   [ngClass]="{'is-invalid': (!email.valid || !emailGroup.valid) && (email.touched || email.dirty)}" />
+            <span class="invalid-feedback" *ngIf="email.errors?.required">
+              Email is required
+            </span>
+          </div>
         </div>
-      </div>
 
-      <div class="form-group row mb-2">
-        <label class="col-md-2 col-form-label"
-               for="confirmEmailId">Confirm Email</label>
-        <div class="col-md-8">
-          <input class="form-control"
-                 id="confirmEmailId"
-                 type="text"
-                 placeholder="Confirm Email (required)"
-                 [ngClass]="{'is-invalid': false}" />
-          <span class="invalid-feedback">
-            error
-          </span>
+        <div class="form-group row mb-2">
+          <label class="col-md-2 col-form-label"
+                 for="confirmEmailId">Confirm Email</label>
+          <div class="col-md-8">
+            <input class="form-control"
+                   id="confirmEmailId"
+                   type="text"
+                   placeholder="Confirm Email (required)"
+                   required
+                   name="confirmEmail"
+                   #confirmEmail = "ngModel"
+                   [(ngModel)]="employee.confirmEmail"
+                   [ngClass]="{'is-invalid': (!confirmEmail.valid || !emailGroup.valid) && (confirmEmail.touched || confirmEmail.dirty)}" />
+            <span class="invalid-feedback" *ngIf="confirmEmail.errors?.required">
+              Confirm email is required
+            </span>
+            <span class="invalid-feedback" *ngIf="emailGroup.errors?.notEqual && !confirmEmail.errors?.required">
+              Email and Confirm Email Dose not match
+            </span>
+          </div>
         </div>
       </div>
 
@@ -62,6 +83,7 @@
                      value="male"
                      type="radio"
                      name="gender"
+                     [(ngModel)]="employee.gender"
                      [ngClass]="{'is-invalid': false}" /> Male
             </label>
           </div>
@@ -71,6 +93,7 @@
                      value="female"
                      type="radio"
                      name="gender"
+                     [(ngModel)]="employee.gender"
                      [ngClass]="{'is-invalid': false}" /> Female
             </label>
           </div>
@@ -85,7 +108,7 @@
 
         <div class="col-md-8">
           <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="gridCheck">
+            <input class="form-check-input" type="checkbox" id="gridCheck" name="isActive" [(ngModel)]="employee.isActive">
             <label class="form-check-label" for="gridCheck">
               Is Active
             </label>
@@ -96,13 +119,19 @@
       <div class="form-group row mb-2">
         <label for="exampleFormControlSelect1" class="col-form-label col-md-2">Example select</label>
         <div class="col-md-8">
-          <select class="form-control" id="exampleFormControlSelect1">
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
+          <select class="form-control"
+                  id="exampleFormControlSelect1"
+                  name="country"
+                  [(ngModel)]="employee.country"
+                  #country = "ngModel"
+                  appSelectRequired
+                  [ngClass]="{'is-invalid': !country.valid && (country.touched || country.dirty)}">
+            <option value="-1" selected hidden>Please select</option>
+            <option *ngFor="let country of countries" [ngValue]= "country.id">{{country.name}}</option>
           </select>
+          <span class="invalid-feedback" *ngIf="country.errors?.notSelected">
+            Country is required
+          </span>
         </div>
       </div>
 
@@ -111,8 +140,8 @@
           <button class="btn btn-primary mr-3"
                   style="width:80px;"
                   type="submit"
-                  [title]="false ? 'Save your entered data' : 'Disabled until the form data is valid'"
-                  [disabled]="true">
+                  [title]="empForm.valid ? 'Save your entered data' : 'Disabled until the form data is valid'"
+                  [disabled]="!empForm.valid">
             Save
           </button>
           <button class="btn btn-outline-secondary mr-3"
@@ -127,6 +156,8 @@
   </div>
 
   <div class="alert alert-success">
-    error
+    form value : {{empForm.value | json}}
+    <hr>
+    Name errors : {{empName.errors | json}}
   </div>
 </div>

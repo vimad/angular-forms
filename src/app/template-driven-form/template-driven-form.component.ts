@@ -1,4 +1,14 @@
 import { Component, OnInit } from '@angular/core';
+import {NgForm} from '@angular/forms';
+
+class Person {
+  name = '';
+  email = '';
+  confirmEmail = '';
+  gender = null;
+  isActive = false;
+  country = -1;
+}
 
 @Component({
   selector: 'app-template-driven-form',
@@ -7,9 +17,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TemplateDrivenFormComponent implements OnInit {
 
+  countries = [{id: 1, name: 'Sri Lanka'} , {id: 2, name: 'India'} , {id: 3, name: 'Italy'}];
+  employee = new Person();
+
   constructor() { }
 
   ngOnInit(): void {
   }
 
+  submit(empForm: NgForm) {
+    console.log(empForm);
+  }
 }
