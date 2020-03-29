@@ -7,7 +7,7 @@ import { TemplateDrivenFormComponent } from './template-driven-form/template-dri
 import { HomeComponent } from './home/home.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormComponent } from './reactive-form/reactive-form.component';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { SelectRequiredDirective } from './template-driven-form/directives/select-required.directive';
 import { ConfirmEmailDirective } from './template-driven-form/directives/confirm-email.directive';
 
@@ -24,7 +24,8 @@ import { ConfirmEmailDirective } from './template-driven-form/directives/confirm
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

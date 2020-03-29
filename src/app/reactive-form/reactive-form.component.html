@@ -4,7 +4,7 @@
   </div>
 
   <div class="card-body">
-    <form novalidate>
+    <form novalidate (ngSubmit)="submit()" [formGroup]="empForm">
 
       <div class="form-group row mb-2">
         <label class="col-md-2 col-form-label"
@@ -14,9 +14,10 @@
                  id="nameId"
                  type="text"
                  placeholder="Name (required)"
-                 [ngClass]="{'is-invalid': false }" />
+                 formControlName="name"
+                 [ngClass]="{'is-invalid': empForm.get('name').errors?.required && (empForm.get('name').touched || empForm.get('name').dirty)}" />
           <span class="invalid-feedback">
-            error
+            Name is required
           </span>
         </div>
       </div>
@@ -29,6 +30,7 @@
                  id="emailId"
                  type="text"
                  placeholder="Email (required)"
+                 formControlName="email"
                  [ngClass]="{'is-invalid': false}" />
           <span class="invalid-feedback">
             error
@@ -44,6 +46,7 @@
                  id="confirmEmailId"
                  type="text"
                  placeholder="Confirm Email (required)"
+                 formControlName="confirmEmail"
                  [ngClass]="{'is-invalid': false}" />
           <span class="invalid-feedback">
             error
@@ -62,6 +65,7 @@
                      value="male"
                      type="radio"
                      name="gender"
+                     formControlName="gender"
                      [ngClass]="{'is-invalid': false}" /> Male
             </label>
           </div>
@@ -71,6 +75,7 @@
                      value="female"
                      type="radio"
                      name="gender"
+                     formControlName="gender"
                      [ngClass]="{'is-invalid': false}" /> Female
             </label>
           </div>
@@ -85,7 +90,7 @@
 
         <div class="col-md-8">
           <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="gridCheck">
+            <input class="form-check-input" type="checkbox" id="gridCheck" formControlName="isActive">
             <label class="form-check-label" for="gridCheck">
               Is Active
             </label>
@@ -96,12 +101,9 @@
       <div class="form-group row mb-2">
         <label for="exampleFormControlSelect1" class="col-form-label col-md-2">Example select</label>
         <div class="col-md-8">
-          <select class="form-control" id="exampleFormControlSelect1">
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
+          <select class="form-control" id="exampleFormControlSelect1" formControlName="country">
+            <option value="-1" selected hidden>Please select</option>
+            <option *ngFor="let country of countries" [ngValue]= "country.id">{{country.name}}</option>
           </select>
         </div>
       </div>
@@ -127,6 +129,6 @@
   </div>
 
   <div class="alert alert-success">
-    error
+    form is {{empForm.value | json}}
   </div>
 </div>
