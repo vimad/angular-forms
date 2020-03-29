@@ -1,6 +1,6 @@
 <div class="card">
   <div class="card-header">
-    Template Driven Form
+    Reactive Form
   </div>
 
   <div class="card-body">
@@ -48,6 +48,53 @@
                  placeholder="Confirm Email (required)"
                  formControlName="confirmEmail"
                  [ngClass]="{'is-invalid': false}" />
+          <span class="invalid-feedback">
+            error
+          </span>
+        </div>
+      </div>
+
+      <div class="form-group row mb-2">
+        <label class="col-md-2 col-form-label"
+               for="phone">Phone Number</label>
+        <div class="col-md-8">
+          <input class="form-control"
+                 id="phone"
+                 type="text"
+                 placeholder="Phone Number"
+                 formControlName="phone"
+                 [ngClass]="{'is-invalid': empForm.get('phone').errors?.required && (empForm.get('phone').touched || empForm.get('phone').dirty)}" />
+          <span class="invalid-feedback">
+            Phone Number is required
+          </span>
+        </div>
+      </div>
+
+      <div class="form-group row mb-2">
+
+        <label class="col-md-2 radio-inline control-label">Contact Preference</label>
+
+        <div class="col-md-8">
+          <div class="form-check form-check-inline">
+            <label>
+              <input class="form-check-input"
+                     value="phone"
+                     type="radio"
+                     name="contact"
+                     formControlName="contact"
+                     [ngClass]="{'is-invalid': false}" /> Phone
+            </label>
+          </div>
+          <div class="form-check form-check-inline">
+            <label>
+              <input class="form-check-input"
+                     value="email"
+                     type="radio"
+                     name="contact"
+                     formControlName="contact"
+                     [ngClass]="{'is-invalid': false}" /> Email
+            </label>
+          </div>
           <span class="invalid-feedback">
             error
           </span>
@@ -113,8 +160,8 @@
           <button class="btn btn-primary mr-3"
                   style="width:80px;"
                   type="submit"
-                  [title]="false ? 'Save your entered data' : 'Disabled until the form data is valid'"
-                  [disabled]="true">
+                  [title]="empForm.valid ? 'Save your entered data' : 'Disabled until the form data is valid'"
+                  [disabled]="!empForm.valid">
             Save
           </button>
           <button class="btn btn-outline-secondary mr-3"

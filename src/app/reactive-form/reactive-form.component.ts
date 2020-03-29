@@ -16,6 +16,7 @@ export class ReactiveFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.initializeForm();
+    this.addRuntimeValidationToPhoneController();
   }
 
   initializeForm() {
@@ -23,9 +24,23 @@ export class ReactiveFormComponent implements OnInit {
       name: ['', Validators.required],
       email: '',
       confirmEmail: '',
-      gender: '',
+      gender: null,
       isActive: false,
-      country: -1
+      country: -1,
+      phone: '',
+      contact: null,
+    });
+  }
+
+  addRuntimeValidationToPhoneController() {
+    this.empForm.get('contact').valueChanges.subscribe(value => {
+      const phoneController = this.empForm.get('phone');
+      if (value === 'phone') {
+        phoneController.setValidators(Validators.required);
+      } else {
+        phoneController.clearValidators();
+      }
+      phoneController.updateValueAndValidity();
     });
   }
 
